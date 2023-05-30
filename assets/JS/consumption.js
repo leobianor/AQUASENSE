@@ -6,8 +6,23 @@ window.addEventListener("DOMContentLoaded", function () {
   var tabela = document.getElementById("registros-table");
   var tbody = tabela.querySelector("tbody"); // Seleciona o elemento <tbody>
 
+  // Define as configurações de ordenação inicial
+  var sortColumn = "data";
+  var sortOrder = "asc";
+
   // Função para criar as linhas da tabela com base nos registros filtrados
   function criarLinhas(registrosFiltrados) {
+    // Ordena os registros com base na coluna e ordem atual
+    registrosFiltrados.sort(function (a, b) {
+      if (sortColumn === "data") {
+        return sortOrder === "asc" ? new Date(a.data) - new Date(b.data) : new Date(b.data) - new Date(a.data);
+      } else if (sortColumn === "valor") {
+        return sortOrder === "asc" ? a.valor - b.valor : b.valor - a.valor;
+      }
+
+      return 0;
+    });
+
     // Limpa as linhas existentes na tabela
     tbody.innerHTML = "";
 
@@ -53,11 +68,35 @@ window.addEventListener("DOMContentLoaded", function () {
     return partes[2] + "/" + partes[1] + "/" + partes[0];
   }
 
+  // Função para alterar a ordem de ordenação
+  function toggleOrder(column) {
+    if (column === sortColumn) {
+      sortOrder = sortOrder === "asc" ? "desc" : "asc";
+    } else {
+      sortColumn = column;
+      sortOrder = "asc";
+    }
+
+    // Atualiza as linhas da tabela com base nos registros filtrados atualizados
+    criarLinhas(registros);
+  }
+
+  // Adiciona o evento de clique aos botões de ordenação
+  var orderButtons = document.querySelectorAll(".order-button");
+  orderButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      var column = button.getAttribute("data-column");
+      toggleOrder(column);
+    });
+  });
+
   // Função para filtrar os registros com base no valor do campo de busca
   function filtrarRegistros() {
     var filtro = document.getElementById("search-input").value.toLowerCase();
     var registrosFiltrados = registros.filter(function (registro) {
+      var dataFormatada = formatarData(registro.data).toLowerCase();
       return (
+        dataFormatada.includes(filtro)||
         registro.data.toLowerCase().includes(filtro) ||
         registro.valor.toLowerCase().includes(filtro)
       );

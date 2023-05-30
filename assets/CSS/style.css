@@ -22,6 +22,7 @@
     --text-color-register: #378FAE;
     --consumption-table-color: #fff;
     --consumption-text-table-color: #0a0a0a;
+    --custom-icon: #0a0a0a;
     
     /* ====== Transition ====== */
     --tran-05: all 0.5s ease;
@@ -47,6 +48,7 @@ body.dark{
     --consumption-table-color: #222121; /*====Cor da tabela de consumo====*/
     --consumption-text-table-color: #c52020; /*====Cor do texto da tabela de consumo*/
     --text-color-register: #c52020; /*====Cor do texto da tabela de registro*/
+    --custom-icon: #c52020;
 }
 /* === Custom Scroll Bar CSS === */
 ::-webkit-scrollbar {
@@ -905,4 +907,7 @@ button {
     margin-bottom: 6px;
   }
 
-
+.custom-icon{
+    color: var(--custom-icon);
+    font-size: 1rem;
+}

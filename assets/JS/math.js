@@ -10,17 +10,17 @@ window.addEventListener("DOMContentLoaded", function () {
   var menorConsumo = null;
 
   registros.forEach(function (registro) {
-    var consumo = parseFloat(registro.valor);
+    var consumo = Number(registro.valor.replace(",", ".")); // Converter para número considerando o separador decimal
     totalConsumo += consumo;
 
     var dataRegistro = new Date(registro.data);
 
-    if (!maiorData || (consumo > maiorConsumo)) {
+    if (!maiorData || consumo > maiorConsumo) {
       maiorData = dataRegistro;
       maiorConsumo = consumo;
     }
 
-    if (!menorData || (consumo < menorConsumo)) {
+    if (!menorData || consumo < menorConsumo) {
       menorData = dataRegistro;
       menorConsumo = consumo;
     }
@@ -29,8 +29,8 @@ window.addEventListener("DOMContentLoaded", function () {
   var mediaConsumo = totalConsumo / registros.length;
 
   // Calcula a variação percentual
-  var primeiroValor = parseFloat(registros[0].valor);
-  var ultimoValor = parseFloat(registros[registros.length - 1].valor);
+  var primeiroValor = Number(registros[0].valor.replace(",", "."));
+  var ultimoValor = Number(registros[registros.length - 1].valor.replace(",", "."));
   var variacaoPercentual = ((ultimoValor - primeiroValor) / primeiroValor) * 100;
 
   // Atualiza os valores nos cards no index.html
