@@ -10,21 +10,21 @@ window.addEventListener("DOMContentLoaded", function () {
   var sortColumn = "data";
   var sortOrder = "asc";
 
-// Função para criar as linhas da tabela com base nos registros filtrados
-function criarLinhas(registrosFiltrados) {
-  // Ordena os registros com base na coluna e ordem atual
-  registrosFiltrados.sort(function (a, b) {
-    if (sortColumn === "data") {
-      return sortOrder === "asc" ? new Date(a.data) - new Date(b.data) : new Date(b.data) - new Date(a.data);
-    } else if (sortColumn === "valor") {
-      var valorA = parseFloat(a.valor.replace("R$ ", "").replace(",", "."));
-      var valorB = parseFloat(b.valor.replace("R$ ", "").replace(",", "."));
+  // Função para criar as linhas da tabela com base nos registros filtrados
+  function criarLinhas(registrosFiltrados) {
+    // Ordena os registros com base na coluna e ordem atual
+    registrosFiltrados.sort(function (a, b) {
+      if (sortColumn === "data") {
+        return sortOrder === "asc" ? new Date(a.data) - new Date(b.data) : new Date(b.data) - new Date(a.data);
+      } else if (sortColumn === "valor") {
+        var valorA = parseFloat(a.valor.replace("R$ ", "").replace(",", "."));
+        var valorB = parseFloat(b.valor.replace("R$ ", "").replace(",", "."));
 
-      return sortOrder === "asc" ? valorA - valorB : valorB - valorA;
-    }
+        return sortOrder === "asc" ? valorA - valorB : valorB - valorA;
+      }
 
-    return 0;
-  });
+      return 0;
+    });
 
     // Limpa as linhas existentes na tabela
     tbody.innerHTML = "";
@@ -99,7 +99,7 @@ function criarLinhas(registrosFiltrados) {
     var registrosFiltrados = registros.filter(function (registro) {
       var dataFormatada = formatarData(registro.data).toLowerCase();
       return (
-        dataFormatada.includes(filtro)||
+        dataFormatada.includes(filtro) ||
         registro.data.toLowerCase().includes(filtro) ||
         registro.valor.toLowerCase().includes(filtro)
       );
@@ -112,6 +112,13 @@ function criarLinhas(registrosFiltrados) {
   // Adiciona o evento de digitação no campo de busca
   var searchInput = document.getElementById("search-input");
   searchInput.addEventListener("keyup", filtrarRegistros);
+
+  // Verifica se o número total de registros é maior ou igual a 36 e remove metade se necessário
+  if (registros.length >= 6) {
+    var registrosExcluir = Math.floor(registros.length / 2);
+    registros.splice(0, registrosExcluir);
+    localStorage.setItem("registros", JSON.stringify(registros));
+  }
 
   // Inicialmente, cria as linhas da tabela com base em todos os registros
   criarLinhas(registros);
