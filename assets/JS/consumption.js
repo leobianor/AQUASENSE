@@ -113,10 +113,9 @@ window.addEventListener("DOMContentLoaded", function () {
   var searchInput = document.getElementById("search-input");
   searchInput.addEventListener("keyup", filtrarRegistros);
 
-  // Verifica se o número total de registros é maior ou igual a 36 e remove metade se necessário
+  // Verifica se o número total de registros é maior ou igual a 36 e remove o primeiro registro se necessário
   if (registros.length >= 6) {
-    var registrosExcluir = Math.floor(registros.length / 2);
-    registros.splice(0, registrosExcluir);
+    registros.splice(0, 1);
     localStorage.setItem("registros", JSON.stringify(registros));
   }
 
