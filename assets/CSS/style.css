@@ -356,6 +356,7 @@ span .text{
     background-color: var(--box3-color);
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.349);
 }
+
 .dash-content .activity .activity-data{
     display: flex;
     justify-content: space-between;
@@ -893,9 +894,8 @@ button {
   
   .remover-button:hover {
     transform: scale(1.1);
-    color: #eb9393;
-    
   }
+
 
   .name-off{
     text-decoration: none;
@@ -911,3 +911,12 @@ button {
     color: var(--custom-icon);
     font-size: 1rem;
 }
+
+.editar-button {
+    padding: 5px 10px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+  }

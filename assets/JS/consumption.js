@@ -40,10 +40,34 @@ window.addEventListener("DOMContentLoaded", function () {
       dataCell.textContent = dataFormatada;
       valorCell.textContent = "R$ " + registro.valor;
 
-      // Cria o botão de remover
+      // Cria os botões de ação (Editar e Remover)
+      var editarBotao = document.createElement("button");
+      editarBotao.textContent = "Editar";
+      editarBotao.classList.add("remover-button");
+
       var removerBotao = document.createElement("button");
       removerBotao.textContent = "Remover";
       removerBotao.classList.add("remover-button");
+
+      // Adiciona o evento de clique ao botão de editar
+      editarBotao.addEventListener("click", function () {
+        var novoValor = prompt("Digite o novo valor:");
+
+        // Verifica se o novo valor é válido
+        if (novoValor !== null && novoValor.trim() !== "") {
+          // Atualiza o valor na tabela
+          valorCell.textContent = "R$ " + novoValor;
+
+          // Atualiza o valor no objeto de registro
+          registrosFiltrados[index].valor = novoValor;
+
+          // Atualiza os registros no localStorage
+          localStorage.setItem("registros", JSON.stringify(registros));
+
+          // Atualiza as linhas da tabela com base nos registros filtrados atualizados
+          criarLinhas(registrosFiltrados);
+        }
+      });
 
       // Adiciona o evento de clique ao botão de remover
       removerBotao.addEventListener("click", function () {
@@ -54,13 +78,14 @@ window.addEventListener("DOMContentLoaded", function () {
         registrosFiltrados.splice(index, 1);
 
         // Atualiza os registros no localStorage
-        localStorage.setItem("registros", JSON.stringify(registrosFiltrados));
+        localStorage.setItem("registros", JSON.stringify(registros));
 
         // Atualiza as linhas da tabela com base nos registros filtrados atualizados
         criarLinhas(registrosFiltrados);
       });
 
-      // Adiciona o botão de remover à célula de ação
+      // Adiciona os botões à célula de ação
+      acaoCell.appendChild(editarBotao);
       acaoCell.appendChild(removerBotao);
     });
   }
@@ -114,7 +139,7 @@ window.addEventListener("DOMContentLoaded", function () {
   searchInput.addEventListener("keyup", filtrarRegistros);
 
   // Verifica se o número total de registros é maior ou igual a 36 e remove o primeiro registro se necessário
-  if (registros.length >= 6) {
+  if (registros.length >= 36) {
     registros.splice(0, 1);
     localStorage.setItem("registros", JSON.stringify(registros));
   }
