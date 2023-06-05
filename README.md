@@ -2,6 +2,6 @@
 Plataforma de controle de consumo de gastos
 
 Integrantes:
-88311 - Antonio Ramos Ferreira
-86936 - Daniel Corrêa Fernandes
-89370 - Leonardo Filiaci Bianor
+Antonio Ramos Ferreira RM88311
+Daniel Corrêa Fernandes RM86936
+Leonardo Filiaci Bianor RM89370
